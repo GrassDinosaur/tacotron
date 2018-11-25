@@ -27,7 +27,7 @@ hparams = tf.contrib.training.HParams(
   decoder_depth=256,
 
   # Training:
-  batch_size=10,
+  batch_size=32,
   adam_beta1=0.9,
   adam_beta2=0.999,
   reg_weight = 1e-6,

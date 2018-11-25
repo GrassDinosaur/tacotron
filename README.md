@@ -149,6 +149,7 @@ models. The code referenced was [Kyubyong's implementation of DC-TTS](https://gi
     train.py (replace "300" with a value based on how long your audio is and the formula above).
 ### TODO
   * Implementation of LPCNet vocoder instead of Griffin-Lim.
+  
   * A model successfully trained with 6 hours of the M-AILABs dataset, implementing guided attention.
 
 ## Related projects
