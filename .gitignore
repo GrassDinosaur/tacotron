@@ -1,0 +1,7 @@
+__pycache__/
+.cache/
+*.pyc
+.DS_Store
+run*.sh
+.idea/workspace.xml
+.idea
