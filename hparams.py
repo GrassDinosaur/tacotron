@@ -40,7 +40,7 @@ hparams = tf.contrib.training.HParams(
   max_T=100,
 
   # Eval:
-  max_iters=300,
+  max_iters=1000,
   griffin_lim_iters=60,
   power=1.5,              # Power to raise magnitudes to prior to Griffin-Lim
 )
