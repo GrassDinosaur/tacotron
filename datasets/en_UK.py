@@ -23,7 +23,7 @@ def build_from_path(in_dir, out_dir, num_workers=1, tqdm=lambda x: x):
   for book in books:
     with open(os.path.join(in_dir, 'by_book/female/elizabeth_klett', book, 'metadata.csv')) as f:
       for line in f:
-        if index < 3000: #Roulette to the first 2999 examples dab XD lmao approx 6 hours
+        if 0 == 0:#index < 3000: #Roulette to the first 2999 examples dab XD lmao approx 6 hours
           parts = line.strip().split('|')
           wav_path = os.path.join(in_dir, 'by_book/female/elizabeth_klett', book, 'wavs', '%s.wav' % parts[0])
 
