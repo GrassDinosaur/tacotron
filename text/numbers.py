@@ -16,7 +16,7 @@ def _remove_commas(m):
 
 
 def _expand_decimal_point(m):
-  return m.group(1).replace('.', ' point ')
+  return m.group(1).replace('.', ' decimal ')
 
 
 def _expand_dollars(m):

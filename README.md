@@ -1,4 +1,5 @@
 # Tacotron
+**NOTICE: GMM HASN'T BEEN IMPLEMENTED YET.**
 
 A fork of **[begeekmyfriend's implementation of Tacotron speech synthesis in TensorFlow](https://github.com/begeekmyfriend/tacotron)** implementing guided attention, ML-AILABS preprocessing.
 

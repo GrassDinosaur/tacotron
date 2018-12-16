@@ -9,15 +9,6 @@ from .rnn_wrappers import FrameProjection, StopProjection, TacotronDecoderWrappe
 from .attention import LocationSensitiveAttention
 from .custom_decoder import CustomDecoder
 import numpy as np
-
-def guided_attention(hp, g=0.2):
-  '''Guided attention. Refer to page 3 on the paper.'''
-  W = np.zeros((hp.max_N, hp.max_T), dtype=np.float32)
-  for n_pos in range(W.shape[0]):
-    for t_pos in range(W.shape[1]):
-      W[n_pos, t_pos] = 1 - np.exp(-(t_pos / float(hp.max_T) - n_pos / float(hp.max_N)) ** 2 / (2 * g * g))
-  return W
-
 class Tacotron():
   def __init__(self, hparams):
     self._hparams = hparams
@@ -105,7 +96,6 @@ class Tacotron():
       self.mel_targets = mel_targets
       self.linear_targets = linear_targets
       self.stop_token_targets = stop_token_targets
-      self.gts = tf.convert_to_tensor(guided_attention(hp))
       log('Initialized Tacotron model. Dimensions: ')
       log('  embedding:               {}'.format(embedded_inputs.shape))
       log('  prenet out:              {}'.format(prenet_outputs.shape))
@@ -135,15 +125,7 @@ class Tacotron():
       all_vars = tf.trainable_variables()
       self.regularization_loss = tf.add_n([tf.nn.l2_loss(v) for v in all_vars]) * hp.reg_weight
 
-      # Guided attention
-      self.A = tf.pad(self.alignments, [(0, 0), (0, hp.max_N), (0, hp.max_T)], mode="CONSTANT", constant_values=-1.)[:,
-               :hp.max_N, :hp.max_T]
-      self.attention_masks = tf.to_float(tf.not_equal(self.A, -1))
-      self.loss_att = tf.reduce_sum(tf.abs(self.A * self.gts) * self.attention_masks)
-      self.mask_sum = tf.reduce_sum(self.attention_masks)
-      self.loss_att /= self.mask_sum
-
-      self.loss = self.mel_loss + self.linear_loss + self.stop_token_loss + self.regularization_loss + self.loss_att
+      self.loss = self.mel_loss + self.linear_loss + self.stop_token_loss + self.regularization_loss
 
 
   def add_optimizer(self, global_step):
